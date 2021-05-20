@@ -4,23 +4,29 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class Connection {
 
     private URL url;
 
 
-    Connection(String url) throws MalformedURLException, UnsupportedEncodingException {
+    Connection(String url) throws MalformedURLException {
         this.url= new URL(url);
 
     }
 
-    public void connect() throws Exception{
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        System.out.println(this + " " + connection.getResponseCode());
-        connection.getInputStream();
+    public void connect(String threadName){
+
+        try{
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            System.out.println("Response from "+url.toString() + " to "+threadName+"\t-> " + connection.getResponseCode());
+            connection.getInputStream();
+        }
+        catch (Exception e){
+            System.out.println("Couldn't Connect to server! Error Code: ");
+        }
+
     }
 
 }
